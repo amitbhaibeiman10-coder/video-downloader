@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Video & Audio Downloader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
@@ -13,23 +15,40 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
+      min-height: 100vh;
     }
-    .box {
+
+    .container {
+      width: 100%;
       max-width: 420px;
       padding: 20px;
+      text-align: center;
     }
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
     input {
       width: 100%;
       padding: 12px;
       border-radius: 6px;
       border: none;
-      margin-top: 10px;
+      margin-bottom: 12px;
+      font-size: 15px;
     }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
     button {
       width: 100%;
-      margin-top: 15px;
       padding: 12px;
       background: #1abc9c;
       border: none;
@@ -38,24 +57,67 @@
       font-weight: bold;
       cursor: pointer;
     }
-    p {
-      margin-top: 15px;
+
+    .info {
+      margin-top: 18px;
       font-size: 14px;
+      line-height: 1.6;
       color: #ccc;
-      line-height: 1.5;
+      text-align: left;
+    }
+
+    .info span {
+      color: #1abc9c;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 12px;
+      color: #666;
     }
   </style>
 </head>
+
 <body>
-  <div class="box">
+  <div class="container">
     <h1>Video & Audio Downloader</h1>
-    <input placeholder="Paste video URL here">
-    <button>Download</button>
-    <p>
-      ✔ Supports video & audio downloads<br>
-      ✔ Paste link and download instantly<br>
-      ✔ Works on mobile & desktop
-    </p>
+
+    <input type="text" placeholder="Paste video URL here">
+
+    <select>
+      <option>Select format</option>
+      <option>Video – 1080p</option>
+      <option>Video – 720p</option>
+      <option>Video – 480p</option>
+      <option>Audio – MP3 (High Quality)</option>
+      <option>Audio – MP3 (Low Size)</option>
+    </select>
+
+    <button onclick="alert('Backend not connected yet')">
+      Download
+    </button>
+
+    <div class="info">
+      ✔ <span>Supported:</span> Video & Audio downloads<br>
+      ✔ <span>Platforms:</span> YouTube, Instagram, Facebook, Twitter (planned)<br>
+      ✔ <span>Usage:</span> Paste link → Select quality → Download<br>
+      ✔ <span>Device:</span> Works on mobile & desktop<br>
+      ✔ <span>Browser:</span> Chrome supported
+    </div>
+
+    <div class="note">
+      This is a demo interface. Download engine will be added soon.
+    </div>
+
+    <footer>
+      © 2025 Video & Audio Downloader
+    </footer>
   </div>
 </body>
 </html>
