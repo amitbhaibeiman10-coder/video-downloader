@@ -1,82 +1,204 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Video Downloader</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Downloader Video & Audio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .box {
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      text-align: center;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: none;
-      font-size: 15px;
-    }
-    button {
-      background: #1abc9c;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+<style>
+:root{
+  --main:#16f2c7;
+  --bg:#0b0f14;
+  --card:#121822;
+  --text:#e6e6e6;
+  --muted:#9aa4b2;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,Arial;
+  background:linear-gradient(180deg,#02060c,#0b0f14);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+}
+
+.container{
+  width:100%;
+  max-width:430px;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 0 40px rgba(0,0,0,.6);
+}
+
+h1{
+  text-align:center;
+  color:var(--main);
+  margin:5px 0;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+input,select,button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:15px;
+  background:#0c1220;
+  color:#fff;
+  margin-bottom:12px;
+}
+
+select option{background:#0c1220}
+
+button{
+  background:var(--main);
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:active{transform:scale(.98)}
+
+.progress-text{
+  margin-top:10px;
+  color:var(--main);
+  font-size:14px;
+}
+
+.progress{
+  height:8px;
+  background:#1e2633;
+  border-radius:8px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#16f2c7,#00ffa6);
+  transition:width .3s;
+}
+
+.section{
+  margin-top:20px;
+}
+
+.section h3{
+  color:var(--main);
+  margin-bottom:8px;
+}
+
+.section ul{
+  padding-left:18px;
+  color:#d1d5db;
+  font-size:14px;
+}
+
+footer{
+  text-align:center;
+  margin-top:25px;
+  font-size:12px;
+  color:#7c8594;
+}
+</style>
 </head>
+
 <body>
+<div class="container">
 
-<div class="box">
-  <h2>Video & Audio Downloader</h2>
+  <div class="card">
+    <h1>Downloader Video & Audio</h1>
+    <div class="subtitle">Fast • Free • No Login Required</div>
 
-  <input id="url" placeholder="Paste video link here" />
-  <select id="format">
-    <option value="mp4">MP4 Video</option>
-    <option value="mp3">MP3 Audio</option>
-  </select>
+    <input id="url" placeholder="Paste video link here">
 
-  <button onclick="go()">Download</button>
+    <select id="type">
+      <option>Download Video (MP4)</option>
+      <option>Download Audio (MP3)</option>
+    </select>
 
-  <p style="font-size:13px;color:#aaa;">
-    Powered by Vercel
-  </p>
+    <select id="quality">
+      <option>Best Quality (Auto)</option>
+      <option>1080p</option>
+      <option>720p</option>
+      <option>480p</option>
+      <option>360p</option>
+    </select>
+
+    <button onclick="startDownload()">Get Download</button>
+
+    <div class="progress-text" id="status">Downloading: 0%</div>
+    <div class="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="section">
+      <h3>How to Use</h3>
+      <ul>
+        <li>Copy the video or audio link</li>
+        <li>Paste the link above</li>
+        <li>Select format & quality</li>
+        <li>Click Get Download</li>
+        <li>Download starts in Chrome</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Supported Platforms</h3>
+      <ul>
+        <li>YouTube</li>
+        <li>Instagram</li>
+        <li>Facebook</li>
+        <li>Twitter (X)</li>
+        <li>Many more…</li>
+      </ul>
+    </div>
+
+    <footer>
+      © 2025 Video Downloader • UI Demo
+    </footer>
+  </div>
+
 </div>
 
 <script>
-function go() {
-  const url = document.getElementById("url").value.trim();
-  const format = document.getElementById("format").value;
-
-  if (!url) {
-    alert("Paste a video link");
+function startDownload(){
+  const url=document.getElementById("url").value.trim();
+  if(!url){
+    alert("Paste a valid video link");
     return;
   }
 
-  fetch(`/api/download?url=${encodeURIComponent(url)}&format=${format}`)
-    .then(r => r.json())
-    .then(d => {
-      if (d.success) {
-        window.location.href = d.download;
-      } else {
-        alert("Failed");
-      }
-    })
-    .catch(() => alert("Server error"));
+  let p=0;
+  const bar=document.getElementById("bar");
+  const text=document.getElementById("status");
+
+  const fake=setInterval(()=>{
+    if(p>=100){
+      clearInterval(fake);
+      text.innerText="Download Ready ✔";
+      return;
+    }
+    p+=5;
+    bar.style.width=p+"%";
+    text.innerText="Downloading: "+p+"%";
+  },200);
 }
 </script>
 
